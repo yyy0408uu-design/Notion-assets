@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>出道紀念日</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&display=swap" rel="stylesheet">
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html, body {
+  width: 2000px;
+  height: 125px;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+  font-family: "ZCOOL KuaiLe", sans-serif;
+  text-align: center;
+}
+
+.counter-box {
+  z-index: 2;
+}
+
+/* 粉藍漸變文字 */
+.gradient-text {
+  background: linear-gradient(to right, #ff9ed8, #82c3ff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.top-text {
+  font-size: 26px;
+  margin-bottom: 4px;
+}
+
+.day-count {
+  font-size: 38px;
+  font-weight: bold;
+}
+
+.bottom-text {
+  font-size: 22px;
+  margin-top: 4px;
+}
+
+/* 🫧 飄浮動畫 */
+.bubble {
+  position: absolute;
+  font-size: 18px;
+  opacity: 0.7;
+  animation: bubble-float linear infinite;
+  z-index: 1;
+  pointer-events: none;
+}
+
+@keyframes bubble-float {
+  0% {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.7;
+  }
+  80% {
+    opacity: 0.7;
+  }
+  100% {
+    transform: translateY(-125px);
+    opacity: 0;
+  }
+}
+</style>
+</head>
+
+<body>
+  <div class="counter-box">
+    <div class="top-text gradient-text">出道</div>
+    <div class="day-count gradient-text" id="days"></div>
+    <div class="bottom-text gradient-text">DEBUT 2025/6/2</div>
+  </div>
+
+<script>
+// 出道日期
+const debutDate = new Date("2025-06-02");
+const today = new Date();
+const diffDays = Math.floor((today - debutDate) / (1000 * 60 * 60 * 24));
+document.getElementById("days").textContent = diffDays + " days";
+
+// 🫧 泡泡隨機飄浮
+function createBubble() {
+  const bubble = document.createElement("div");
+  bubble.className = "bubble";
+  bubble.textContent = "🫧";
+  
+  const x = Math.random() * 2000;
+  const duration = 6 + Math.random() * 4;
+  const size = 14 + Math.random() * 10;
+
+  bubble.style.left = x + "px";
+  bubble.style.fontSize = size + "px";
+  bubble.style.animationDuration = duration + "s";
+
+  document.body.appendChild(bubble);
+  setTimeout(() => bubble.remove(), duration * 1000);
+}
+setInterval(createBubble, 600);
+</script>
+</body>
+</html>
