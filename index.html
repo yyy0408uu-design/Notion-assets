@@ -4,119 +4,156 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>出道紀念日</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&display=swap" rel="stylesheet">
 <style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-html, body {
-  width: 2000px;
+*{margin:0;padding:0;box-sizing:border-box;}
+
+/* 可愛圓潤字體（網路直接用） */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Quicksand:wght@400;500;600&display=swap');
+
+#wrapper {
+  width: 100%;
+  max-width: 2000px;
   height: 125px;
-  background: transparent;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
+  background: #fff9e6; /* 淺黃底色 */
+  background-image: url("https://www.transparenttextures.com/patterns/cat.svg");
   position: relative;
-  font-family: "ZCOOL KuaiLe", sans-serif;
-  text-align: center;
+  overflow: hidden;
+  margin: 0 auto;
+  font-family: "Noto Sans TC", "Quicksand", sans-serif;
 }
 
-.counter-box {
-  z-index: 2;
+.box {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  padding: 0 10px;
+  z-index: 2;
 }
 
-/* 粉藍漸變文字 */
-.gradient-text {
-  background: linear-gradient(to right, #ff9ed8, #82c3ff);
+/* 第一行 */
+.line-top {
+  width: 100%;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: clamp(15px, 2.2vw, 20px);
+  font-weight: 500;
+  margin-bottom: 6px;
+  background: linear-gradient(90deg, #ff80ab, #4fc3f7);
   -webkit-background-clip: text;
-  background-clip: text;
   color: transparent;
 }
 
-.top-text {
-  font-size: 26px;
+/* 第二行 */
+.line-bottom {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: clamp(14px, 2vw, 18px);
+  font-weight: 500;
+  background: linear-gradient(90deg, #ff80ab, #4fc3f7);
+  -webkit-background-clip: text;
+  color: transparent;
 }
 
-.day-count {
-  font-size: 38px;
+/* 圓形天數數字 */
+.num {
+  display: flex;
+  gap: 6px;
+}
+
+.d {
+  width: clamp(28px, 4vw, 34px);
+  height: clamp(28px, 4vw, 34px);
+  background: #fff;
+  border: 2px solid #f8bbd0;
+  border-radius: 50%; /* 圓形 */
+  font-size: clamp(14px, 2.2vw, 16px);
   font-weight: bold;
-  margin: 2px 0;
+  background: linear-gradient(90deg, #ff80ab, #4fc3f7);
+  -webkit-background-clip: text;
+  color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.bottom-text {
-  font-size: 22px;
-}
-
-/* 🫧 飄浮動畫 */
+/* 🫧 泡泡往上飄 */
 .bubble {
   position: absolute;
-  font-size: 18px;
-  opacity: 0.7;
-  animation: bubble-float linear infinite;
-  z-index: 1;
+  font-size: 12px;
+  animation: bubble-fly 6s linear infinite;
   pointer-events: none;
+  z-index: 1;
 }
 
-@keyframes bubble-float {
-  0% {
-    transform: translateY(20px);
-    opacity: 0;
-  }
-  20% {
-    opacity: 0.7;
-  }
-  80% {
-    opacity: 0.7;
-  }
-  100% {
-    transform: translateY(-125px);
-    opacity: 0;
-  }
+@keyframes bubble-fly {
+  0% { transform: translateY(125px); opacity:1; }
+  100% { transform: translateY(-20px); opacity:0; }
 }
 </style>
 </head>
 
 <body>
-  <div class="counter-box">
-    <div class="top-text gradient-text">出道</div>
-    <div class="day-count gradient-text" id="days"></div>
-    <div class="bottom-text gradient-text">DEBUT 2025/6/2</div>
+<div id="wrapper">
+  <div class="box">
+    <div class="line-top">
+      出道
+      <div class="num">
+        <div class="d" id="d1">0</div>
+        <div class="d" id="d2">0</div>
+        <div class="d" id="d3">0</div>
+        <div class="d" id="d4">0</div>
+      </div>
+      days
+    </div>
+    <div class="line-bottom">
+      2025/6/2 DEBUT
+    </div>
   </div>
+</div>
 
 <script>
-// 出道日期
-const debutDate = new Date("2025-06-02");
-const today = new Date();
-const diffDays = Math.floor((today - debutDate) / (1000 * 60 * 60 * 24));
-document.getElementById("days").textContent = diffDays + " days";
-
-// 🫧 泡泡隨機飄浮
-function createBubble() {
-  const bubble = document.createElement("div");
-  bubble.className = "bubble";
-  bubble.textContent = "🫧";
-  
-  const x = Math.random() * 2000;
-  const duration = 6 + Math.random() * 4;
-  const size = 14 + Math.random() * 10;
-
-  bubble.style.left = x + "px";
-  bubble.style.fontSize = size + "px";
-  bubble.style.animationDuration = duration + "s";
-
-  document.body.appendChild(bubble);
-  setTimeout(() => bubble.remove(), duration * 1000);
+// 🫧 泡泡往上飄動畫
+function createBubble(){
+  const b=document.createElement('div');
+  b.className='bubble';
+  b.textContent='🫧';
+  b.style.left = Math.random()*100+'%';
+  document.getElementById('wrapper').appendChild(b);
+  setTimeout(()=>b.remove(),6000);
 }
-setInterval(createBubble, 600);
+setInterval(createBubble,350);
+
+// 自動計算出道天數 2025-06-02
+function getDays(){
+  const debut = new Date('2025-06-02');
+  const now = new Date();
+  const diff = now - debut;
+  return Math.max(0, Math.floor(diff / (1000*60*60*24)));
+}
+
+// 四位數顯示
+function showCount(num) {
+  const str = num.toString().padStart(4, "0");
+  document.getElementById("d1").textContent = str[0];
+  document.getElementById("d2").textContent = str[1];
+  document.getElementById("d3").textContent = str[2];
+  document.getElementById("d4").textContent = str[3];
+}
+
+const days = getDays();
+showCount(days);
 </script>
 </body>
 </html>
